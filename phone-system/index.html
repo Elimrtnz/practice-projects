@@ -3,13 +3,16 @@
 <head>
 	<title>Phone System</title>
 	<style type="text/css">
+        button{
+            color:black;
+        }
 		#phoneNumbers{
 			width: 75%;
 			margin: 0 auto;
 			text-align: center;
 		}
 		#phoneNumbers > button{
-			background-color: pink;
+			background-color: red;
 			width: 33%;
 			height: 10vh;
 		}
@@ -26,10 +29,47 @@
 </div>
 </body>
 	<script>
-		$("#phoneNumbers>button").on('click',handleNumberPress);
-		function handleNumberPress(){
-			var buttonPressed = $(this).text();
-			responsiveVoice.speak("you pressed "+buttonPressed);
+		$(document).ready(function() {
+            greeting();
+            $("#phoneNumbers>button").on('click',handleNumberPress);
+        });
+
+		function greeting(){
+            responsiveVoice.speak("Hello, and welcome to the most awesome phone system ever created." +
+                "Please choose from the following menu options."+
+                "Press ONE, for fast food options. Press TWO, for medical offices. Press THREE, for car rentals. " +
+                "Press FOUR, for grocery stores. Press ZERO, to speak with an operator. Press NINE, to repeat these options.");
 		}
+
+        var buttonPressed;
+		function handleNumberPress(){
+			buttonPressed = $(this).text();
+			responsiveVoice.speak("you pressed "+buttonPressed);
+            optionChosen();
+		}
+
+		function optionChosen(){
+		    console.log('option chosen being called');
+		    switch(buttonPressed){
+                case '1': responsiveVoice.speak(" fast food options ");
+                break;
+                case '2': responsiveVoice.speak(" medical offices ");
+                    break;
+                case '3': responsiveVoice.speak(" car rentals ");
+                    break;
+                case '4': responsiveVoice.speak(" grocery stores ");
+                    break;
+                case '0': responsiveVoice.speak(" Please hold for the next available operator ");
+                    break;
+                case '9': responsiveVoice.speak(greeting());
+                    break;
+                default: responsiveVoice.speak('that is not an option');
+            }
+        }
+
+
+
+
+
 	</script>
 </html>
